@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aesthetic Muse ✨ | Luxury Edition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Poppins:wght@300;400;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ff4d6d;
+            --secondary: #ffb3c1;
+            --bg: #fff1f2;
+            --text: #444;
+            --card-bg: white;
+            --panel-bg: rgba(255, 255, 255, 0.8);
+            --accent: #ffccd5;
+        }
+
+        body.dark-mode {
+            --bg: #0f0c29;
+            --text: #fde2ff;
+            --card-bg: #1b1b2f;
+            --panel-bg: rgba(27, 27, 47, 0.9);
+            --secondary: #4d375d;
+            --accent: #242444;
+        }
+
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            margin: 0; background: var(--bg); 
+            color: var(--text); transition: 0.5s; 
+            overflow-x: hidden;
+        }
+
+        .sparkle-cursor {
+            position: fixed; width: 10px; height: 10px;
+            background: var(--primary); border-radius: 50%;
+            pointer-events: none; z-index: 9999;
+            box-shadow: 0 0 15px var(--primary);
+            transition: transform 0.1s;
+        }
+
+        .slider-container {
+            width: 100%;
+            overflow: hidden;
+            padding: 40px 0;
+            background: rgba(255, 77, 109, 0.05);
+        }
+        .slider-track {
+            display: flex;
+            width: calc(320px * 15); 
+            animation: scroll 40s linear infinite;
+            gap: 20px;
+        }
+        .slider-track:hover { animation-play-state: paused; }
+        .slide {
+            width: 300px;
+            height: 400px;
+            flex-shrink: 0;
+            border-radius: 20px;
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(-320px * 7.5)); }
+        }
+
+        header { text-align: center; padding: 40px 20px; }
+        h1 { font-family: 'Dancing Script', cursive; font-size: 5rem; color: var(--primary); margin: 0; }
+        #greeting { font-family: 'Playfair Display'; font-style: italic; opacity: 0.8; letter-spacing: 1px; }
+
+        .top-features { position: fixed; top: 20px; right: 20px; display: flex; gap: 15px; z-index: 1000; }
+        .icon-btn { 
+            background: var(--panel-bg); border: 1px solid var(--secondary);
+            padding: 12px; border-radius: 50%; cursor: pointer; font-size: 1.3rem;
+            backdrop-filter: blur(15px); transition: 0.3s;
+            display: flex; align-items: center; justify-content: center; width: 50px; height: 50px;
+        }
+        .icon-btn:hover { transform: translateY(-5px); background: var(--primary); color: white; }
+
+        .panel { 
+            display: flex; gap: 20px; justify-content: center; margin: 20px auto; 
+            flex-wrap: wrap; background: var(--panel-bg); padding: 30px;
+            border-radius: 60px; width: fit-content; backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.3);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        select, button.main-btn { 
+            padding: 15px 25px; border-radius: 30px; border: 1px solid var(--secondary); 
+            outline: none; background: var(--card-bg); color: var(--text);
+            font-size: 0.9rem; cursor: pointer; transition: 0.4s;
+        }
+
+        button.main-btn { background: var(--primary); color: white; border: none; font-weight: 700; letter-spacing: 1px; }
+        button.main-btn:hover { letter-spacing: 3px; background: #ff758f; }
+
+        #output { 
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+            gap: 40px; padding: 50px; max-width: 1400px; margin: auto;
+        }
+
+        .card { 
+            background: var(--card-bg); border-radius: 40px; overflow: hidden; 
+            box-shadow: 0 20px 50px rgba(0,0,0,0.05); transition: 0.6s cubic-bezier(0.23, 1, 0.32, 1); 
+            position: relative; border: 1px solid rgba(255,255,255,0.1);
+            opacity: 0; transform: translateY(30px);
+        }
+
+        .card:hover { transform: scale(1.05) translateY(-10px); box-shadow: 0 30px 60px rgba(255,77,109,0.2); }
+        .card img { width: 100%; height: 450px; object-fit: cover; }
+
+        .card-overlay {
+            position: absolute; bottom: 0; left: 0; right: 0;
+            background: linear-gradient(transparent, var(--card-bg));
+            padding: 30px 20px 20px;
+        }
+
+        .tone-badge {
+            background: var(--primary); color: white; padding: 5px 15px;
+            border-radius: 20px; font-size: 0.7rem; font-weight: 700;
+        }
+
+        #scrollTop {
+            position: fixed; bottom: 30px; right: 30px; display: none;
+            background: var(--primary); color: white; border: none;
+            width: 50px; height: 50px; border-radius: 50%; cursor: pointer;
+            z-index: 1000;
+        }
+
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body onmousemove="moveSparkle(event)">
+
+<div class="sparkle-cursor" id="sparkle"></div>
+
+<div class="top-features">
+    <button class="icon-btn" id="themeBtn" onclick="toggleDarkMode()">🌙</button>
+</div>
+
+<div class="slider-container">
+    <div class="slider-track">
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=500')"></div>
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1539109132314-3475d24c217b?w=500')"></div>
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=500')"></div>
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1485462537746-965f33f7f6a7?w=500')"></div>
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=500')"></div>
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=500')"></div>
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=500')"></div>
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1529139513065-07b3b1bfde91?w=500')"></div>
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=500')"></div>
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1537832816519-689ad163238b?w=500')"></div>
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1531058022387-3233302ad93d?w=500')"></div>
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1509631179647-0177331693ae?w=500')"></div>
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1581044777550-4cfa60707c03?w=500')"></div>
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=500')"></div>
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=500')"></div>
+    </div>
+</div>
+
+<header>
+    <h1 id="title">Aesthetic Muse</h1>
+    <p id="greeting">Loading your aesthetic...</p>
+</header>
+
+<div class="panel">
+    <select id="gender">
+        <option value="women">Princess 👑</option>
+        <option value="men">Prince 🤴</option>
+    </select>
+    <select id="occasion">
+        <option value="party">Party Look ✨</option>
+        <option value="office">Work Chic 💼</option>
+        <option value="wedding">Bridal/Groom 💍</option>
+    </select>
+    <select id="tone">
+        <option value="Fair">Fair Tone</option>
+        <option value="Medium">Medium Tone</option>
+        <option value="Deep">Deep Tone</option>
+    </select>
+    <button class="main-btn" onclick="render()">REVEAL MAGIC</button>
+</div>
+
+<div id="output"></div>
+
+<button id="scrollTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑</button>
+
+<script>
+const db = {
+    women: {
+        party: {
+            Fair: [
+                ["Pastel Pink Glam", "https://klothtrend.com/imgbook/product/t/20221003/16648031631788292589.jpg", "https://www.meesho.com/search?q=pastel+pink+party+gown"],
+                ["Lavender Satin", "https://5.imimg.com/data5/SELLER/Default/2022/12/KE/XQ/AX/69577729/lavender-party-wear-satin-dress-1000x1000.png", "https://www.flipkart.com/search?q=lavender+satin+party+dress"],
+                ["Sky Blue Lehenga", "https://2.bp.blogspot.com/-sAOpj5r-nOI/V6mnsiNZRPI/AAAAAAAALeg/yucoIuUXTVcGsQSDIJwEDPDJIztakJnvQCLcB/s1600/beautiful-light-color-Bridesmaid-Lehengas.jpg", "https://www.meesho.com/search?q=sky+blue+lehenga"]
+            ],
+            Medium: [
+                ["Mustard Yellow Gown", "https://assets2.andaazfashion.com/media/catalog/product/cache/1/image/500x750/a12781a7f2ccb3d663f7fd01e1bd2e4e/m/u/mustard-yellow-georgette-ombre-printed-gown-lstv121412-1.jpg", "https://www.meesho.com/search?q=mustard+yellow+gown"]
+            ],
+            Deep: [
+                ["Ruby Red Satin", "https://images.unsplash.com/photo-1518831959646-742c3a14ebf7?w=800", "https://www.flipkart.com/search?q=ruby+red+satin+dress"]
+            ]
+        }
+    },
+    men: {
+        party: {
+            Fair: [["Pastel Blazer", "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800", "https://www.meesho.com/search?q=pastel+blazer"]]
+        }
+    }
+};
+
+const hour = new Date().getHours();
+const greetText = hour < 12 ? "Good Morning, Princess ✨" : hour < 18 ? "Good Afternoon, Muse ✨" : "Good Evening, Queen ✨";
+document.getElementById('greeting').innerText = greetText;
+
+function moveSparkle(e) {
+    const s = document.getElementById('sparkle');
+    s.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+}
+
+function toggleDarkMode() { 
+    const isDark = document.body.classList.toggle('dark-mode'); 
+    const btn = document.getElementById('themeBtn');
+    btn.innerText = isDark ? "☀️" : "🌙";
+}
+
+window.onscroll = function() {
+    document.getElementById("scrollTop").style.display = window.scrollY > 300 ? "block" : "none";
+};
+
+function render() {
+    const gender = document.getElementById("gender").value;
+    const occasion = document.getElementById("occasion").value;
+    const tone = document.getElementById("tone").value;
+    const output = document.getElementById("output");
+
+    output.innerHTML = "";
+
+    const selection = (db[gender] && db[gender][occasion] && db[gender][occasion][tone]) || [];
+
+    if(selection.length === 0) {
+        output.innerHTML = "<p style='text-align:center; width:100%; opacity:0.6;'>Magic is brewing for this selection! Check back soon. ✨</p>";
+    }
+
+    selection.forEach((item, i) => {
+        const link = item[2] || "#";   // product URL
+        const a = document.createElement("a");
+        a.href = link;
+        a.target = "_blank";
+        a.style.textDecoration = "none";
+
+        const card = document.createElement("div");
+        card.className = "card";
+        card.style.animation = `fadeInUp 0.6s ease forwards ${i * 0.1}s`;
+        card.innerHTML = `
+            <img src="${item[1]}" alt="${item[0]}" onerror="this.src='https://via.placeholder.com/300x450?text=Aesthetic+Look'">
+            <div class="card-overlay">
+                <span class="tone-badge">${tone} Essence</span>
+                <h3 style="margin:10px 0 0;">${item[0]}</h3>
+            </div>
+        `;
+        a.appendChild(card);
+        output.appendChild(a);
+    });
+}
+
+render();
+</script>
+</body>
+</html>
